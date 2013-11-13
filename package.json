@@ -1,0 +1,37 @@
+{
+  "name": "bbsub",
+  "version": "0.0.1",
+  "author": "Gianfranco Cecconi <gianfranco.cecconi@digitalcontraptionsimaginarium.co.uk>",
+  "description": "Full text search on the BBC subtitles.",
+  "author": {
+    "name": "Gianfranco Cecconi",
+    "email": "gianfranco.cecconi@digitalcontraptionsimaginarium.co.uk",
+    "url": "http://www.digitalcontraptionsimaginarium.co.uk"
+  },
+  "contributors": [ 
+    {
+      "name": "Gianfranco Cecconi",
+      "email": "gianfranco.cecconi@digitalcontraptionsimaginarium.co.uk"
+    } 
+  ],
+  "homepage": "https://github.com/giacecco/bbsub",
+  "repository": { 
+    "type": "git", 
+    "url": "git://github.com/giacecco/bbsub.git"
+  },
+  "bugs": { 
+    "url": "https://github.com/giacecco/bbsub/issues" 
+  },
+  "keywords": [
+  ],
+  "main": "./lib/main",
+  "dependencies" : {
+    "async": ">=0.2.9",
+    "optimist": ">=0.6.0",
+    "underscore": ">=1.5.2"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.21"
+  }
+}
