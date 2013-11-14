@@ -2,7 +2,7 @@
 
 ![love to nibble anything that comes into the shed, like our willies.](loveToNibble.jpg)
 
-bbsub is a wrapper to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) tool, mainly aimed at downloading the programmes' subtitles and playing with _corpus linguistics_. 
+bbsub is a wrapper to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics). 
 
 ## Usage
 
@@ -54,3 +54,5 @@ The library offers also additional functionality, such as the extraction of the 
 
 ## Notes
 Words shorter than three characters and included in a pre-defined set of stopwords are ignored. The list of stopwords is sourced from [package 'tm'](http://cran.r-project.org/web/packages/tm/index.html) in R.
+
+The picture is courtesy of [Charlie Swinbourne.com's blog](http://charlieswinbourne.com/2011/10/18/attacking-the-bbc-on-live-subtitles-doesnt-do-deaf-people-any-favours/).
