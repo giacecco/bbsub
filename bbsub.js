@@ -60,6 +60,7 @@ var search = function (parameters, callback) {
 
 }
 
+// getSubtitles takes as an input one programme id and retuns a set of subtitles
 var getSubtitles = function (id, callback) {
 	exec('get_iplayer --subsonly --get ' + id, function(err, stdout, stderr) {
 		var filename = stdout.split("INFO: Downloading Subtitles to '")[1] || undefined;
@@ -88,26 +89,32 @@ var getSubtitles = function (id, callback) {
 	});
 }
 
-// returns an hash of words and their occurrency timecodes; it takes as an 
-// input either one set of subtitles, or an array of sets
-var getKeywordsFromSubtitles = function (subtitlesSets) {
-	if (!subtitlesSets[0][0]) subtitlesSets = [ ].concat([ subtitlesSets ]);
-	return _.reduce(subtitlesSets, function (memo, subtitlesSet) {
-		return _.reduce(subtitlesSet, function (memo, s) { 
-			_.each(s.text
-					.toLowerCase()
-					.replace(/[^a-z\s]/g, " ")
-					.replace(/\s{2,}/, " ")
-					.split(" "),
-				function (word) {
-					if ((word.length >= MIN_WORD_LENGTH) && !_.contains(STOPWORDS, word)) {
-						memo[word] = (memo[word] || [ ]).concat(s.startTimecode);  				
-					}
-				});
-			return memo;
-		}, memo);
-	}, { });
+// getKeywordsFromSubtitles takes a subtitles set as an input and returns a 
+// hash of its words and their occurrency timecodes
+var getKeywordsFromSubtitles = function (subtitles) {
+	return _.reduce(subtitles, function (memo, s) { 
+		_.each(s.text
+				.toLowerCase()
+				.replace(/[^a-z\s]/g, " ")
+				.replace(/\s{2,}/, " ")
+				.split(" "),
+			function (word) {
+				if ((word.length >= MIN_WORD_LENGTH) && !_.contains(STOPWORDS, word)) {
+					memo[word] = (memo[word] || [ ]).concat(s.startTimecode);  				
+				}
+			});
+		return memo; }, { });
 } 
+
+var getKeywordsFromMoreSubtitles = function (subtitlesArray) {
+	return _.reduce(subtitlesArray, function (memo, subtitles) {
+		var words = getKeywordsFromSubtitles(subtitles);
+		_.each(_.keys(words), function (word) {
+			memo[word] = (memo[word] || 0) + words[word].length;
+		});
+		return memo;
+	}, { });	
+}
 
 search({ 'fullText': argv._[0], 
 		 'channel': argv['channel'],
@@ -117,10 +124,10 @@ search({ 'fullText': argv._[0],
 		 'exclude-channel': argv['exclude-channel'], }, 
 	function (err, results) {
 		getSubtitles(results[0].id, function (err, subtitles) {
-			var words = getKeywordsFromSubtitles(subtitles);
+			var words = getKeywordsFromMoreSubtitles([ subtitles, subtitles ]);
 			_.each(_.keys(words)
-			 	   		.sort(function (a, b) { return words[b].length - words[a].length; }), 
-		   		   function (k) { console.log(k + ": " + words[k].length); }); 
+			 	   		.sort(function (a, b) { return words[b] - words[a]; }), 
+		   		   function (k) { console.log(k + ": " + words[k]); }); 
 		});
 	}
 );
