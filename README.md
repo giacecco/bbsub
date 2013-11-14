@@ -1,12 +1,20 @@
-# bbsub
+# node-bbsub
 
 ![love to nibble anything that comes into the shed, like our willies.](loveToNibble.jpg)
 
-bbsub is a wrapper to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics). 
+bbsub is a Node.js wrapper library to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics).
+
+The library comes with a few examples for immediate use. 
 
 ## Where do the subtitles come from?
 
-[get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) is an open source BBC iPlayer client. Among its many features - some of which are controversial, such as the capability to download to keep the programmes - get_iplayer can download the programmes' subtitles when available, in [srt format](http://en.wikipedia.org/wiki/.srt#SubRip_text_file_format). 
+[get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) is an open source BBC iPlayer client. Among its many features - some of which are controversial, such as the capability to download to keep the programmes - get_iplayer can download the programmes' subtitles when available, in [srt format](http://en.wikipedia.org/wiki/.srt#SubRip_text_file_format).
+
+bbsub wraps get_iplayer's subtitle download functionality and adds some of its own, as described below. 
+
+## Installation
+
+	npm install node-bbsub
 
 ## Usage
 
