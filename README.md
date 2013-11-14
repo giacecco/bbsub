@@ -30,7 +30,7 @@ Alternatively, you could directly do:
 	$ node example.js "have i got news for you"
 	{"programme":2,"contains":2,"strong":3,"language":2,"good":9,"evening":1,"welcome":3,"news":8,"alexander":2,"armstrong":1, ... }
 
-If the result of the research is more than one programme, the returned corpus will be merged across all programmes, e.g.: 
+If the result of the search is more than one programme, the returned corpus will be merged across all programmes, e.g.: 
 
 	$ node example.js "Inspector Montalbano" 
 
@@ -53,4 +53,4 @@ Run example.js without parameters to see which search options of the original ge
 The library offers also additional functionality, such as the extraction of the time code for each occurrence of the words. See the code for more detail. 
 
 ## Notes
-Words shorter than three characters and included in a pre-defined set of stopwords are ignored.
+Words shorter than three characters and included in a pre-defined set of stopwords are ignored. The list of stopwords is sourced from [package 'tm'](http://cran.r-project.org/web/packages/tm/index.html) in R.
