@@ -6,8 +6,20 @@ var STOPWORDS = [ "i", "me", "my", "myself", "we", "our", "ours", "ourselves", "
 var async = require("async"),
 	exec = require('child_process').exec,
 	fs = require("fs"),
+	argv = require('optimist') 
+		.usage('Usage: $0 <string> [option] [option...]\n\n' +
+			   'Search Options:\n' +
+ 				'--category <string>              Narrow search to matched categories (regex or comma separated values)\n' +
+				'--channel <string>               Narrow search to matched channel(s) (regex or comma separated values)\n' +
+				'--exclude <string>               Narrow search to exclude matched programme names (regex or comma separated values)\n' +
+				'--exclude-category <string>      Narrow search to exclude matched categories (regex or comma separated values)\n' +
+				'--exclude-channel <string>       Narrow search to exclude matched channel(s) (regex or comma separated values)\n' +
+				'--fields <field1>,<field2>,..    Searches only in the specified comma separated fields\n' +
+				'--long, -l                       Additionally search in programme descriptions and episode names (same as --fields=name,episode,desc )\n' +
+				'--since                          Limit search to programmes added to the cache in the last N hours\n' + 
+				'--type <type>                    Only search in these types of programmes: livetv,tv,liveradio,radio,all (tv is default)\n')
+		.argv,
 	_ = require("underscore");
-
 
 var search = function (parameters, callback) {
 
@@ -56,24 +68,17 @@ var getSubtitles = function (id, callback) {
 			filename = filename.split("'")[0];
 			fs.readFile(filename, 'utf8', function (err, data) {
 				fs.unlink(filename, function (err) {
-					var tempItem = { text: "" };
-					data = _.reduce(data.split("\n"), function (memo, row) {
-						if (row == "") {
-							var item = tempItem;
-							item.text = item.text.substring(0, item.text.length - 1);
-							tempItem = { text: "" };
-							return memo.concat(item);
-						} else {
-							if (!tempItem.number) {
-								tempItem.number = parseInt(row); //likely unnecessary
-							} else if (!tempItem.startTimecode) {
-								tempItem.startTimecode = row.split(" ")[0];
-								tempItem.endTimecode = row.split("> ")[1];
-							} else {
-								tempItem.text += row + "\n";
-							}
-							return memo;
+					data = _.reduce(data.split("\n\n"), function (memo, item) {
+						item = item.split("\n");
+						if (item.length > 2) {
+							memo = memo.concat({
+								number: parseInt(item[0]),
+								startTimecode: item[1].split(" ")[0],
+								endTimecode: item[1].split("> ")[1],
+								text: _.rest(item, 2).join("\n"),
+							});						
 						}
+						return memo;
 					}, [ ]);
 					callback (err, data);
 				});
@@ -83,24 +88,27 @@ var getSubtitles = function (id, callback) {
 }
 
 var getKeywordsFromSubtitles = function (subtitles) {
-	var fullText = _.reduce(subtitles, function (memo, s) { return memo + s.text + "\n"; }, "")
-			.replace(/\n/g, " ")
-			.toLowerCase()
-			.replace(/[^a-z\s]/g, " ")
-			.replace(/\s{2,}/, ""); 
-	return _.reduce(fullText.split(" "), function (memo, word) { 
-		if ((word.length >= MIN_WORD_LENGTH) && !_.contains(STOPWORDS, word)) {
-			memo[word] = (memo[word] || 0) + 1;			
-		}
+	return _.reduce(subtitles, function (memo, s) { 
+		_.each(s.text
+				.toLowerCase()
+				.replace(/[^a-z\s]/g, " ")
+				.replace(/\s{2,}/, " ")
+				.split(" "),
+			function (word) {
+				if ((word.length >= MIN_WORD_LENGTH) && !_.contains(STOPWORDS, word)) {
+					memo[word] = (memo[word] || [ ]).concat(s.startTimecode);  				
+				}
+			});
 		return memo;
 	}, { });
 } 
 
-words = [ ];
 search({ fullText: "Truckers" }, function (err, results) {
 	getSubtitles(results[0].id, function (err, subtitles) {
-		words = getKeywordsFromSubtitles(subtitles);
-		console.log(words);
+		var words = getKeywordsFromSubtitles(subtitles);
+		_.each(_.keys(words)
+		 	   		.sort(function (a, b) { return words[b].length - words[a].length; }), 
+	   		   function (k) { console.log(k + ": " + words[k].length); }); 
 	});
 });
 
