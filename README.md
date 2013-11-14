@@ -4,6 +4,10 @@
 
 bbsub is a wrapper to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics). 
 
+## Where do the subtitles come from?
+
+[get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) is an open source BBC iPlayer client. Among its many features - some of which are controversial, such as the capability to download to keep the programmes - get_iplayer can download the programmes' subtitles when available, in [srt format](http://en.wikipedia.org/wiki/.srt#SubRip_text_file_format). 
+
 ## Usage
 
 First search what programmes you are interested in by using get_iplayer, e.g.
