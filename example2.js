@@ -18,8 +18,14 @@ bbsub.search({ 'fullText': argv._[0],
 		 'exclude-category': argv['exclude-category'],
 		 'exclude-channel': argv['exclude-channel'], }, 
 	function (err, results) {
-		bbsub.getMoreSubtitles(_.map(results, function (r) { return r.id; }), function (err, subtitles) {
-			console.log(JSON.stringify(bbsub.getKeywordsFromMoreSubtitles(subtitles)));	
+		console.log("Analysing '" + results[0].title + "'");
+		bbsub.getSubtitles(results[0].id, function (err, subtitles) {
+			var words = bbsub.getKeywordsFromSubtitles(subtitles);
+			console.log("The top ten words are:");
+			var sortedWords = _.keys(words).sort(function (a, b) { return words[b].length - words[a].length; });
+			for(var i = 0; i < 10; i++) {
+				console.log("  " + (i + 1) + ": " + sortedWords[i] + " (" + words[sortedWords[i]].length + " occurrences at " + _.first(words[sortedWords[i]], 3).concat("...").join(", ") + ")");
+			}
 		});
 	}
-);
+);	
