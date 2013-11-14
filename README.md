@@ -2,7 +2,7 @@
 
 ![love to nibble anything that comes into the shed, like our willies.](loveToNibble.jpg)
 
-bbsub is a Node.js wrapper library to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics).
+node-bbsub is a Node.js wrapper library to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) command-line tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics).
 
 The library comes with a few examples for immediate use. 
 
@@ -15,6 +15,8 @@ bbsub wraps get_iplayer's subtitle download functionality and adds some of its o
 ## Installation
 
 	npm install node-bbsub
+
+node-bbsub requires the availability of get_iplayer.
 
 ## Usage
 
