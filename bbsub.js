@@ -87,19 +87,24 @@ var getSubtitles = function (id, callback) {
 	});
 }
 
-var getKeywordsFromSubtitles = function (subtitles) {
-	return _.reduce(subtitles, function (memo, s) { 
-		_.each(s.text
-				.toLowerCase()
-				.replace(/[^a-z\s]/g, " ")
-				.replace(/\s{2,}/, " ")
-				.split(" "),
-			function (word) {
-				if ((word.length >= MIN_WORD_LENGTH) && !_.contains(STOPWORDS, word)) {
-					memo[word] = (memo[word] || [ ]).concat(s.startTimecode);  				
-				}
-			});
-		return memo;
+// returns an hash of words and their occurrency timecodes; it takes as an 
+// input either one set of subtitles, or an array of sets
+var getKeywordsFromSubtitles = function (subtitlesSets) {
+	if (!subtitlesSets[0][0]) subtitlesSets = [ ].concat([ subtitlesSets ]);
+	return _.reduce(subtitlesSets, function (memo, subtitlesSet) {
+		return _.reduce(subtitlesSet, function (memo, s) { 
+			_.each(s.text
+					.toLowerCase()
+					.replace(/[^a-z\s]/g, " ")
+					.replace(/\s{2,}/, " ")
+					.split(" "),
+				function (word) {
+					if ((word.length >= MIN_WORD_LENGTH) && !_.contains(STOPWORDS, word)) {
+						memo[word] = (memo[word] || [ ]).concat(s.startTimecode);  				
+					}
+				});
+			return memo;
+		}, memo);
 	}, { });
 } 
 
