@@ -89,6 +89,14 @@ var getSubtitles = function (id, callback) {
 	});
 }
 
+var getMoreSubtitles = function (ids, callback) {
+	async.reduce(ids, [ ], function (memo, id, callback) {
+		getSubtitles(id, function (err, subtitles) {
+			callback(err, memo.concat([ subtitles ]));
+		});	
+	}, callback);
+}
+
 // getKeywordsFromSubtitles takes a subtitles set as an input and returns a 
 // hash of its words and their occurrency timecodes
 var getKeywordsFromSubtitles = function (subtitles) {
@@ -123,11 +131,8 @@ search({ 'fullText': argv._[0],
 		 'exclude-category': argv['exclude-category'],
 		 'exclude-channel': argv['exclude-channel'], }, 
 	function (err, results) {
-		getSubtitles(results[0].id, function (err, subtitles) {
-			var words = getKeywordsFromMoreSubtitles([ subtitles, subtitles ]);
-			_.each(_.keys(words)
-			 	   		.sort(function (a, b) { return words[b] - words[a]; }), 
-		   		   function (k) { console.log(k + ": " + words[k]); }); 
+		getMoreSubtitles(_.map(results, function (r) { return r.id; }), function (err, subtitles) {
+			console.log(JSON.stringify(getKeywordsFromMoreSubtitles(subtitles)));	
 		});
 	}
 );
