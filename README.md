@@ -67,6 +67,8 @@ The library offers also additional functionality, such as the extraction of the 
 	  10: week (13 occurrences at 00:00:45,000, 00:02:09,000, 00:03:08,000, ...)
 
 ## Notes
-Words shorter than three characters and included in a pre-defined set of stopwords are ignored. The list of stopwords is sourced from [package 'tm'](http://cran.r-project.org/web/packages/tm/index.html) in R.
+Words shorter than three characters and included in a pre-defined set of stopwords are ignored. The list of stopwords is sourced from [package 'tm'](http://cran.r-project.org/web/packages/tm/index.html) in R. 
+
+Combinations of words that make sense as a whole, e.g. "big data", are unfortunately not recognised. There will be one entry for 'data' and none for 'big', as it is shorter than 4 characters.
 
 The picture is courtesy of [Charlie Swinbourne.com's blog](http://charlieswinbourne.com/2011/10/18/attacking-the-bbc-on-live-subtitles-doesnt-do-deaf-people-any-favours/).
