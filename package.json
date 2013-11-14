@@ -23,10 +23,14 @@
     "url": "https://github.com/giacecco/bbsub/issues" 
   },
   "keywords": [
+    "BBC", "iPlayer", "get_iplayer", "subtitles", "words"
   ],
   "main": "./lib/main",
   "dependencies" : {
     "async": ">=0.2.9",
+    "underscore": ">=1.5.2"
+  },
+  "devDependencies" : {
     "optimist": ">=0.6.0",
     "underscore": ">=1.5.2"
   },
