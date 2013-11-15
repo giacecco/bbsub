@@ -2,9 +2,9 @@
 
 ![love to nibble anything that comes into the shed, like our willies.](loveToNibble.jpg)
 
-node-bbsub is a Node.js wrapper library to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) command-line tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics).
+bbsub (or 'node-bbsub' on npm) is a Node.js wrapper library to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) command-line tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics).
 
-The library comes with a few examples for immediate use. 
+The library comes with a command line tool of the same name and few examples for immediate use. 
 
 ## Where do the subtitles come from?
 
@@ -36,17 +36,17 @@ First search what programmes you are interested in by using get_iplayer, e.g.
 
 ... then get the programme's words and word frequency:
 
-	$ node example1.js 373
+	$ node bbsub.js 373
 	{"programme":2,"contains":2,"strong":3,"language":2,"good":9,"evening":1,"welcome":3,"news":8,"alexander":2,"armstrong":1, ... }
 
 Alternatively, you could directly do:
 
-	$ node example1.js "have i got news for you"
+	$ node bbsub.js "have i got news for you"
 	{"programme":2,"contains":2,"strong":3,"language":2,"good":9,"evening":1,"welcome":3,"news":8,"alexander":2,"armstrong":1, ... }
 
 If the result of the search is more than one programme, the returned corpus will be merged across all programmes, e.g.: 
 
-	$ node example1.js "Inspector Montalbano" 
+	$ node bbsub.js "Inspector Montalbano" 
 
 will give you the corpus of all the episodes listed below:
 
@@ -62,11 +62,11 @@ will give you the corpus of all the episodes listed below:
 	448:	Inspector Montalbano: Series 3 - 3. A Voice in the Night, BBC Four, Crime,Drama,Guidance,TV, default
 	449:	Inspector Montalbano: Series 3 - 4. A Ray of Light, BBC Four, Crime,Drama,Guidance,TV, default
 
-Run example.js without parameters to see which search options of the original get_iplayer are supported.
+Run example1.js or example2.js without parameters to see which search options of the original get_iplayer are supported.
 
 The library offers also additional functionality, such as the extraction of the time code for each occurrence of the words. See the code for more detail. An example is provided with the source:
 
-	$ node example2.js "have i got news for you"
+	$ node topten.js "have i got news for you"
 	Analysing 'Have I Got News for You: Series 46: Episode 6'
 	The top ten words are:
 	  1: said (32 occurrences at 00:01:52,000, 00:02:56,000, 00:05:20,000, ...)
@@ -81,7 +81,7 @@ The library offers also additional functionality, such as the extraction of the 
 	  10: week (13 occurrences at 00:00:45,000, 00:02:09,000, 00:03:08,000, ...)
 
 ## Notes
-Words shorter than three characters and included in a pre-defined set of stopwords are ignored. The list of stopwords is sourced from [package 'tm'](http://cran.r-project.org/web/packages/tm/index.html) in R. 
+Words shorter than three characters and included in a pre-defined set of ["stop words"](http://en.wikipedia.org/wiki/Stop_words) are ignored. The list of English stop words is sourced from [package 'tm'](http://cran.r-project.org/web/packages/tm/index.html) in R. 
 
 Combinations of words that make sense as a whole, e.g. "big data", are unfortunately not recognised. There will be one entry for 'data' and none for 'big', as it is shorter than 4 characters.
 
