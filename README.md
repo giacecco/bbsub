@@ -62,7 +62,18 @@ will give you the corpus of all the episodes listed below:
 	448:	Inspector Montalbano: Series 3 - 3. A Voice in the Night, BBC Four, Crime,Drama,Guidance,TV, default
 	449:	Inspector Montalbano: Series 3 - 4. A Ray of Light, BBC Four, Crime,Drama,Guidance,TV, default
 
-Run example1.js or example2.js without parameters to see which search options of the original get_iplayer are supported.
+Run bbsub.js or any of the examples without parameters to see which search options of the original get_iplayer are supported.
+
+## So what?
+
+Making something interesting with bbsub is just up to you. For example, you can easily produce word clouds out of the programmes' subtitles, there is an R example script in bbsub's distribution package for doing just that!
+
+	node bbsub.js "have i got news for you" > hignfy.json
+	rscript wordcloud.R --json hignfy.json --png hignfy.png
+
+![Have I Got News For You word cloud](hignfy.png)
+
+## What else can bbsub do?
 
 The library offers also additional functionality, such as the extraction of the time code for each occurrence of the words. See the code for more detail. An example is provided with the source:
 
