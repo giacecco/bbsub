@@ -68,10 +68,11 @@ Run bbsub.js or any of the examples without parameters to see which search optio
 
 Making something interesting with bbsub is just up to you. For example, you can easily produce word clouds out of the programmes' subtitles, there is an R example script in bbsub's distribution package for doing just that!
 
-	node bbsub.js "have i got news for you" > hignfy.json
+	cd examples
+	node ../bbsub.js "have i got news for you" > hignfy.json
 	rscript wordcloud.R --json hignfy.json --png hignfy.png
 
-![Have I Got News For You word cloud](hignfy.png)
+![Have I Got News For You word cloud](examples/hignfy.png)
 
 ## What else can bbsub do?
 
