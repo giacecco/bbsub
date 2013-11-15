@@ -1,6 +1,6 @@
 {
   "name": "node-bbsub",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Gianfranco Cecconi <gianfranco.cecconi@digitalcontraptionsimaginarium.co.uk>",
   "description": "Corpus linguistics on BBC programmes' subtitles",
   "author": {
