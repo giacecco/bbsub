@@ -1,5 +1,7 @@
 # node-bbsub
 
+![nodei.co npm status](https://nodei.co/npm/node-bbsub.png)
+
 ![love to nibble anything that comes into the shed, like our willies.](loveToNibble.jpg)
 
 bbsub (or 'node-bbsub' on npm) is a Node.js wrapper library to the [get_iplayer](http://www.infradead.org/get_iplayer/html/get_iplayer.html) command-line tool, mainly aimed at downloading the programmes' subtitles and playing with [_corpus linguistics_](http://en.wikipedia.org/wiki/Corpus_linguistics).
